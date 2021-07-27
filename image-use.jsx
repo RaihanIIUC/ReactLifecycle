@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import './App.css'
- 
+import './App.css' ;
 
-class Ima extends Component {
+class Loader extends Component {
   render() {
     return (
         <div
@@ -28,4 +27,4 @@ class Ima extends Component {
   }
 }
 
-export default Ima;
+export default Loader;

@@ -1,129 +1,81 @@
-import { Component  } from 'react';
+import { Component, useEffect, useState  } from 'react';
+import { unstable_batchedUpdates } from 'react-dom';
 import './App.css';
-import CartDetail from './cart_detail';
-import CartList from './cart_page';
-import Ima from './image-use';
+import CartDetail from './components/cart_detail';
+import CartList from './components/cart_page';
+import Loader from './components/image-use';
  
-class App extends Component {
-  state = {
-    cartList: [
-      {
+const App = () => {
+
+ 
+    const [cartList, setcartList] = useState([
+        {
         name: "Mouse",
-        description:
+        Description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-        price: 200,
-        category: "Computer Helps",
+        Price: 200,
+        Category: "Computer Helps",
         show: true,
       },
       {
         name: "Keyboard",
-        description:
+        Description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-        price: 300,
-        category: "computer helps",
+        Price: 300,
+        Category: "computer helps",
         show: true,
       },
       {
         name: "USb",
-        description:
+        Description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
-        price: 300,
-        category: "compueter storage",
+        Price: 300,
+        Category: "compueter storage",
         show: true,
       },
-    ],
-    currentCart: null,
-    loading: true,
-    loaded : false,
-    
-  };
+    ]);
 
-  selectCart = (data) => {
+    const[currentCart,setcurrentCart] = useState(null);
+    const[loader,setLoader] = useState(true);
+
+
+ const selectCart = (data) => {
  
-    this.setState({ ...this.state, currentCart: data },
-      () => {
-           setTimeout(() => {
-             this.setState({ ...this.state, loaded: true });
-           });
-           return setTimeout(() => {
-             this.setState({ ...this.state, loaded: false });
-           }, 4000);
-     }
-    
-    );
-     
-
-       
-  };
-  diselectCart = () => {
-    this.setState({ ...this.state, currentCart: null },
-      () => {
-      
-    setTimeout(() => {
-         this.setState({ ...this.state, loaded: true });
-    });
-        return setTimeout(() => {
-          this.setState({ ...this.state, loaded: false });
-        }, 4000);
-      }
-    );
-
-   
+   setcurrentCart({ ...currentCart, currentCart : data });
+          
   };
 
-  componentDidMount() {
-    this.fakeRequest().then(() => {
-      const el = document.querySelector(".container");
-      if (el) {
-        el.remove(); // removing the spinner element
-        this.setState({ loading: false }); // showing the app
-      }
-    });
-  }
+ const diselectCart = () => {
+    setcurrentCart( null )};
  
-
-  componentWillUnmount() {
-   }
-
- componentDidUpdate( ) {
- 
-  
-}
-   // 
-fakeRequest = () => {
-    return new Promise((resolve) => setTimeout(() => resolve(), 2500));
-  };
+    useEffect(() => {
+      setInterval(()=>{
+        setLoader(false);
+      },2000);
+    },[loader]);
 
 
 
-
-
-  render() {
-    if (this.state.loading) {
-      return null;
-    }else{
-
-
- return this.state.loaded === true ? (
-   <Ima />
- ) : (
-   <div className="App">
-     {this.state.currentCart ? (
+ return (
+    <>
+{
+  loader ? <Loader/> : 
+  (
+      currentCart  ? (
        <CartDetail
-         currentCart={this.state.currentCart}
-         diselectCart={this.diselectCart}
+          cart={currentCart}
+         diselectCart={diselectCart}
        />
      ) : (
-       <CartList cartList={this.state.cartList} selectCart={this.selectCart} />
-     )}
-   </div>
- );
+       <CartList cartList={cartList} selectCart={selectCart} />
+     )
+ )
+}
+ </>
+ )
 
     }
     
-   
-  }
-}
 
 export default App;
 
