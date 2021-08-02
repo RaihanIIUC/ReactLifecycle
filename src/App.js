@@ -38,6 +38,10 @@ const App = () => {
   const history = useHistory();
 
   const diselectCart = () => {
+    // setInterval(() => {
+    //   setLoader(false);
+    // }, 2000);
+    
     history.push("/");
   };
 
@@ -58,6 +62,9 @@ const App = () => {
         </Route>
         <Route exact path="/products/:id">
           <CartDetail cartList={cartList} diselectCart={diselectCart} />
+        </Route>
+         <Route path="*">
+             404
         </Route>
       </Switch>
         )
