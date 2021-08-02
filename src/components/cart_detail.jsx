@@ -8,8 +8,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-r
 
 const CartDetails = (props) => {
 
-  console.log(props);
-
+ 
   const [loader, setLoader] = useState(true);
   const params = useParams();
 
@@ -18,17 +17,19 @@ const CartDetails = (props) => {
     setTimeout(() => {
       setLoader(false);
 
-    }, 1000);
+    }, 2000);
   }, [loader]);
 
 
- <Route exact path="/products/:id" render={({match}) => (
-  <CartDetails cartList={props.cartList.find(p => p.id === match.params.id)} />
-)} />
+//  <Route exact path="/products/:id" render={({match}) => (
+//   <CartDetails cartList={props.cartList.find(p => p.id === match.params.id)} />
+// )} />
 
   return (
     <>
-      <div
+      {
+        (loader) ? <Loader/> :
+        <div
         onClick={props.diselectCart}
 
       >
@@ -38,6 +39,7 @@ const CartDetails = (props) => {
         <h1>Id no : {props.cartList[params.id].Description}</h1>
       </div>
 
+      }
      
     </>
   );

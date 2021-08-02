@@ -1,6 +1,5 @@
 import { Component, useEffect, useState } from "react";
-import { unstable_batchedUpdates } from "react-dom";
-import "./App.css";
+ import "./App.css";
 import CartDetail from "./components/cart_detail";
 import CartList from "./components/cart_page";
 import Loader from "./components/image-use";
@@ -45,12 +44,15 @@ const App = () => {
   useEffect(() => {
     setInterval(() => {
       setLoader(false);
-    }, 1000);
+    }, 2000);
   }, [loader]);
 
   return (
     <>
-      <Switch>
+      {
+        loader ? <Loader/> : 
+        (
+          <Switch>
         <Route exact path="/">
           <CartList cartList={cartList} />
         </Route>
@@ -58,6 +60,8 @@ const App = () => {
           <CartDetail cartList={cartList} diselectCart={diselectCart} />
         </Route>
       </Switch>
+        )
+      }
     </>
   );
 };

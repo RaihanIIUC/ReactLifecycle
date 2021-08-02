@@ -3,13 +3,19 @@ import Loader from "./image-use";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 const CartList = (props) => {
 
+  const[loader,setLoader] = useState(true);
 
 
+  useEffect(() => {
+    setInterval({...loader, setLoader : false },2000);
+  },[loader]);
 
+ 
   return (
     <>
-      {props.cartList.map((cart, index) =>
+{props.cartList.map((cart, index) =>
       (
+     
         <div
           style={{
             marginBottom: "10px",
